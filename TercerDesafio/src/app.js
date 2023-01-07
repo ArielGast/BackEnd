@@ -20,5 +20,4 @@ app.get('/products/:pId', async (req, res) => {
 
 app.listen(PORT, () => {
     console.log (`Escuchando el puerto ${PORT}`);
-    return 'Puerto activo'
 })
