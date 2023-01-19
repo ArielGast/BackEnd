@@ -95,7 +95,6 @@ import fs, { read } from 'fs';
                 const readProducts = await fs.promises.readFile(this.path, 'utf-8');
                 const readProductsJS = await JSON.parse(readProducts);
                 const deleteProduct = readProductsJS.filter((el) => el.id !== parseInt(id));
-                //console.log('Producto borrado');
                 console.log(deleteProduct);
                 await fs.promises.writeFile(this.path, JSON.stringify(deleteProduct));
             } else {
