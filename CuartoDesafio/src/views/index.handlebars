@@ -1,0 +1,15 @@
+<h2>Listado de Carritos</h2>
+{{#if cart.length}}
+    {{#each cart}}
+        <h4>El carrito {{idcart}} tiene los siguientes productos:</h4>
+        {{#if products}}
+            {{#each products}}
+                <p> Producto: {{productid}} cantidad: {{quantity}} </p>
+            {{/each}}
+        {{else}}
+            <p>El carrito esta creado pero no tiene productos</p>
+        {{/if}}
+    {{/each}}
+    {{else}}
+        <h3>No hay ningún carrito</h3>
+{{/if}}
