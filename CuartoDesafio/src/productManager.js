@@ -98,9 +98,16 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
             if (fs.existsSync(this.path)) {
                 const readProducts = await fs.promises.readFile(this.path, 'utf-8');
                 const readProductsJS = await JSON.parse(readProducts);
-                const deleteProduct = readProductsJS.filter((el) => el.id !== parseInt(id));
-                console.log(deleteProduct);
-                await fs.promises.writeFile(this.path, JSON.stringify(deleteProduct));
+                const bandera = readProductsJS.some((e) => e.id === parseInt(id)); 
+                console.log(bandera)
+                if (bandera) {
+                    const deleteProduct = readProductsJS.filter((el) => el.id !== parseInt(id));
+                    console.log(deleteProduct);
+                    await fs.promises.writeFile(this.path, JSON.stringify(deleteProduct));
+                    return deleteProduct;
+                } else {
+                    return ('No existe el ID')
+                }
             } else {
             return ('No File')
             }

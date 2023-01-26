@@ -64,7 +64,7 @@ export class CartManager {
                 const readCartJS = JSON.parse(readCart);
                 const findCart = readCartJS.filter((el) => el.idcart == idC)
                 if (findCart.length === 0) {
-                    return 'Carrito Vacio'
+                    return 'Not Found'
                 } else {
                     return findCart;
                 }

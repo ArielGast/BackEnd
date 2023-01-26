@@ -1,5 +1,27 @@
-<h2>Listado de Carritos</h2>
-{{#if cart.length}}
+<h2>Listado de Productos</h2>
+{{#if products.length}}
+    {{#each products}}
+        <div>
+            <p>Id: {{id}}</p>
+            <p>Producto: {{title}}</p>
+            <p>Código: {{code}}</p>
+            <p>Precio: $ {{price}}</p>
+            <p>Estado: {{status}}</p>
+            <p>Stock: {{stock}}</p>
+            <p>Categoria: {{category}}</p>
+            <img src={{thumbnail}} alt="imagen"></img>
+        </div>
+    
+    {{/each}}
+    {{else}}
+        <h3>No hay ningún producto</h3>
+{{/if}} 
+
+
+
+
+
+{{!-- {{#if cart.length}}
     {{#each cart}}
         <h4>El carrito {{idcart}} tiene los siguientes productos:</h4>
         {{#if products}}
@@ -12,4 +34,4 @@
     {{/each}}
     {{else}}
         <h3>No hay ningún carrito</h3>
-{{/if}}
+{{/if}} --}}

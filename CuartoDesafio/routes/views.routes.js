@@ -1,21 +1,30 @@
 import { Router } from 'express';
 import fs from 'fs';
+import { ProductManager } from '../src/productManager.js';
 
 
-const file_cart = './carrito.json';
 const file_products = './productos.json';
 const router = Router();
-
+const productManager= new ProductManager();
 
 router.get('/', async (req, res) => {
-let cart = [];
-if (fs.existsSync(file_cart)){
-    const cartJson = await fs.promises.readFile(file_cart, 'utf-8')
-    cart = JSON.parse(cartJson)
-}
-console.log(cart)
-res.render('index', {cart})
+    let products = [];
+    if (fs.existsSync(file_products)){
+        const productsJson = await fs.promises.readFile(file_products, 'utf-8')
+        products = JSON.parse(productsJson)
+    }   
+    console.log(products)
+    res.render('index', {products})
 });
+
+router.get ('/realtimeproducts',  async (req,res) => {
+    let products = [];
+    if (fs.existsSync(file_products)){
+        const productsJson = await fs.promises.readFile(file_products, 'utf-8')
+        products = JSON.parse(productsJson)
+    }
+    res.render('realTimeProducts', {products})
+})
 
 
 export default router
