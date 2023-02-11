@@ -32,7 +32,7 @@ import { __dirname } from '../../utils.js';
                     const readProductsJS = JSON.parse(readProducts);
                     if (readProductsJS.some((el) => el.code === obj.code)) {
                         console.log('Repeated Code');
-                        return true
+                        return 
                     } else {
                         const product = {
                             id: await readProductsJS[readProductsJS.length - 1].id + 1,
@@ -47,7 +47,7 @@ import { __dirname } from '../../utils.js';
                         }
                         readProductsJS.push(product);
                         await fs.promises.writeFile(this.path, JSON.stringify(readProductsJS))
-                        return false
+                        return readProductsJS
                     }
                 }
 
@@ -61,7 +61,7 @@ import { __dirname } from '../../utils.js';
         try {
             if (fs.existsSync(this.path)) {
                 const readProducts = await fs.promises.readFile(this.path, 'utf-8');
-                if (limit === 'max') {
+                if (!limit) {
                     return JSON.parse(readProducts)
                 } else {
                     return JSON.parse(readProducts).slice(0,limit)

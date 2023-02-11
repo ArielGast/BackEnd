@@ -6,7 +6,6 @@ const contenido = document.getElementById('content');
 const par = document.getElementById('parrafo');
 const borrar = document.getElementById('btnBorrar');
 
-
 formu.onsubmit = (e) => {
     e.preventDefault()
     const nombre = document.getElementById('title').value;
@@ -41,7 +40,7 @@ socket.on('renderizado', (productos) => {
     productos.forEach((el) => {
         const prod = document.createElement('div')
         prod.innerHTML = `
-                        <p>ID: ${el.id}</p>    
+                        <p>ID: ${el._id}</p>    
                         <p>Nombre: ${el.title}</p>
                         <p>Descripcion: ${el.description}</p>    
                         <p>Código: ${el.code}</p>
@@ -61,7 +60,7 @@ socket.on('Agregado', (productos) => {
     productos.forEach((el) => {
         const prod = document.createElement('div')
         prod.innerHTML = `
-                        <p>ID: ${el.id}</p>    
+                        <p>ID: ${el._id}</p>    
                         <p>Nombre: ${el.title}</p>
                         <p>Descripcion: ${el.description}</p>    
                         <p>Código: ${el.code}</p>
@@ -79,7 +78,7 @@ socket.on('Agregado', (productos) => {
 
 borrar.onclick = (e) => {
     e.preventDefault();
-    const prodAborrar = parseInt(document.getElementById('productoid').value);
+    const prodAborrar = document.getElementById('productoid').value;
     socket.emit ('borrar', prodAborrar)
 }
 
@@ -88,7 +87,7 @@ socket.on('borrado', (newProducts) => {
     newProducts.forEach((el) => {
         const prod = document.createElement('div')
         prod.innerHTML = `
-                        <p>ID: ${el.id}</p>    
+                        <p>ID: ${el._id}</p>    
                         <p>Nombre: ${el.title}</p>
                         <p>Descripcion: ${el.description}</p>    
                         <p>Código: ${el.code}</p>
@@ -103,3 +102,4 @@ socket.on('borrado', (newProducts) => {
     par.innerHTML= ""
     par.innerHTML = "Producto Borrado"
 })
+

@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
 
-const messagesModel = new mongoose.Schema({
+const messagesSchema = new mongoose.Schema({
     email: {
         type: String,
         require:true,
-        unique: true,
     },
     message: {
         type: String,
@@ -12,4 +11,4 @@ const messagesModel = new mongoose.Schema({
     },
 })
 
-export const messageSchema = mongoose.model('Messages', messagesModel)
+export const messagesModel = mongoose.model('Messages', messagesSchema)

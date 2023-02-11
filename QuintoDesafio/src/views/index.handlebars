@@ -2,8 +2,9 @@
 {{#if products.length}}
     {{#each products}}
         <div>
-            <p>Id: {{id}}</p>
-            <p>Producto: {{title}}</p>
+            <p>Id: {{_id}}</p>
+            <p>Producto: {{products.title}}</p>
+            <p>Descripción: {{description}}</p>
             <p>Código: {{code}}</p>
             <p>Precio: $ {{price}}</p>
             <p>Estado: {{status}}</p>
@@ -17,21 +18,3 @@
         <h3>No hay ningún producto</h3>
 {{/if}} 
 
-
-
-
-
-{{!-- {{#if cart.length}}
-    {{#each cart}}
-        <h4>El carrito {{idcart}} tiene los siguientes productos:</h4>
-        {{#if products}}
-            {{#each products}}
-                <p> Producto: {{productid}} cantidad: {{quantity}} </p>
-            {{/each}}
-        {{else}}
-            <p>El carrito esta creado pero no tiene productos</p>
-        {{/if}}
-    {{/each}}
-    {{else}}
-        <h3>No hay ningún carrito</h3>
-{{/if}} --}}
