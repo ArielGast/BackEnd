@@ -2,17 +2,21 @@ import {productsModel} from '../models/products.model.js';
 
 export  class ProductManager {
 
-    async getProducts(lim) {
+    async getProducts(lim, pag, qry, srt) {
         try {
-            if (lim == '') {
-                return await productsModel.find();
-            }else {
-                return await productsModel.find().limit(lim);
+            const options = {
+                limit: lim,
+                page: pag,
+                query: qry,
+                sort: srt
             }
-        }catch (error) {
-            console.log(error);
+            const listado =  await productsModel.paginate({},options);      
+            return listado
+        }catch(error) {
+            console.log(error)
         }
     }
+
 
     async getProductsForHandle(lim) {
         try {
@@ -64,12 +68,12 @@ export  class ProductManager {
     async updateProduct (idProducto, obj) {
         try {
             const updateProduct = await productsModel.updateOne({ _id: idProducto}, {$set: { "title":obj.title, "description":obj.description, "code":obj.code, "price":obj.price, "status":obj.status, "stock":obj.stock, "category":obj.category, "thumbnail":obj.thumbnail} });
-            console.log(updateProduct)
             return updateProduct;           
         }catch (error) {
             console.log(error)
             
         }
     }
+
 
 }

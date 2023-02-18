@@ -1,5 +1,4 @@
 import { Router } from 'express';
-//import { ProductManager } from '../dao/fileManagers/productManager.js';
 import { ProductManager } from '../dao/mongoManagers/productManager.js';
 
 const router = Router();
@@ -7,16 +6,35 @@ const productManager = new ProductManager();
 
 
 router.get('/', async (req, res) => {
-    const { limit } = req.query;
-    const productos = await productManager.getProducts(limit);
-    res.json({productos});
-} ); 
+    const { limit=10, page=1, query, sort } = req.query;
+    const productos = await productManager.getProducts(limit, page, query, sort);
+    if (productos.docs.length == 0) {
+        const respuesta = {
+            status: 'error'
+        }
+            res.json({respuesta});        
+    } else {
+        const respuesta = {
+            status: 'succes',
+            payload: productos.docs,
+            totalpages: productos.totalPages,
+            prevPage: productos.prevPage,
+            nextPage: productos.nextPage,
+            page: productos.page,
+            hasPrevPage: productos.hasPrevPage,
+            hasNextPage: productos.hasNextPage,
+            prevLink: productos.hasPrevPage != false ? (`localhost:8080/api/products?page=${parseInt(page)-1}`): null,
+            nextLink: productos.hasNextPage != false ? (`localhost:8080/api/products?page=${parseInt(page)+1}`): null
+        }
+        res.json({respuesta});
+    }
+
+}); 
 
 router.get('/:pId', async (req, res) => {
     const {pId} = req.params;
     const product = await productManager.getProductById(pId);
     res.json({product});
-    
     
 })
 

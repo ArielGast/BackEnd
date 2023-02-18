@@ -54,4 +54,57 @@ export  class CartManager {
             console.log(error);   
         }
     }
+
+    async deleteProductFromCart (idCar, idP) {
+        try {
+            let response;
+            const searchCart = await cartsModel.findOne({idcart: idCar});
+            const findProduct = searchCart.products.findIndex(p => p.idProduct == idP);
+            if (findProduct === -1) {
+                response = 'Error';
+                return response;
+            } else {
+               await cartsModel.updateOne({idCart: idCar},{$pull:{products: {idProduct: idP }}})
+                response = 'Succes';
+                return response
+            }
+
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
+
+    async updateCart (idCar, obj) {
+        try {
+            const updateCart = await cartsModel.updateOne({idCart: idCar}, {$set :{obj}});
+            return updateCart
+        }catch (error) {
+            console.log(error);
+        }
+    }
+
+    async updateProductQty (idCar, idP, qty) {
+        try {
+            const updateQuantity = await cartsModel.updateOne({idCart: idCar, 'products.idProduct':idP}, {$set: {'products.$.quantity': qty}});
+            return updateQuantity.modifiedCount
+        }catch(error) {
+            console.log(error);
+            
+        }
+    }
+
+    async deleteAllProducts (idCar) {
+        try {
+
+            const cart = await this.getCartById(idCar);
+            const productIds = cart.products.map(product => product.idProduct);
+            productIds.forEach(p => {
+                this.deleteProductFromCart(idCar, p)
+            });
+            return 'Succes' 
+        } catch(error) {
+            console.log(error)
+        }
+    }
 }
