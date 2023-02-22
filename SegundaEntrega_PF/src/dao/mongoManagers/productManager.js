@@ -45,8 +45,8 @@ export  class ProductManager {
     }
     async addProduct(obj) {
         try {
-                 const newProduct = await productsModel.create(obj);
-                 return newProduct;
+            const newProduct = await productsModel.create(obj);
+            return newProduct;
             }catch (error) {
             console.log(error);
         }

@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { cartsModel } from "../models/carts.model.js";
 
 export  class CartManager {
@@ -25,22 +26,28 @@ export  class CartManager {
         }
     }
 
-    async addToCart (idCar, idP) {
+    async addToCart(idCart, idProduct) {
         try {
-            const searchCart = await cartsModel.findOne({idCart: idCar});
-            const findProduct = searchCart.products.findIndex(p => p.idProduct == idP);
-            if (findProduct === -1) {
-                searchCart.products.push({idProduct: idP, quantity:1 });
-                await searchCart.save();
-            }else {
-                await cartsModel.updateOne({idCart: idCar, "products.idProduct": idP}, {$inc: {"products.$.quantity": 1}});                
-                }
-            return searchCart
-
-        }catch (error) {
-            console.log(error);
+          const searchCart = await cartsModel.findOne({ idCart });
+          const productIndex = searchCart.products.findIndex(
+            (p) => p._id.toString() === idProduct.toString()
+          );
+          if (productIndex === -1) {
+            searchCart.products.push({ _id: idProduct, quantity: 1 });
+            await searchCart.save();
+          } else {
+            const productToUpdate = searchCart.products[productIndex];
+            productToUpdate.quantity += 1;
+            console.log(searchCart)
+            await searchCart.save();
+          }
+          return searchCart;
+        } catch (error) {
+          console.error(error);
         }
-    }
+      }
+      
+
 
     async getCartById(idC) {
         try {
@@ -58,7 +65,7 @@ export  class CartManager {
     async deleteProductFromCart (idCar, idP) {
         try {
             let response;
-            const searchCart = await cartsModel.findOne({idcart: idCar});
+            const searchCart = await cartsModel.findOne({idCart: idCar});
             const findProduct = searchCart.products.findIndex(p => p.idProduct == idP);
             if (findProduct === -1) {
                 response = 'Error';
