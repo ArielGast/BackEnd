@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+//import {productsModel} from "../models/products.model.js"
 
 const cartsSchema = new mongoose.Schema({
     idCart: {
@@ -9,7 +10,7 @@ const cartsSchema = new mongoose.Schema({
             {
                 _id: {
                     type: mongoose.Schema.Types.ObjectId,
-                    ref: 'products',
+                    ref: 'Products',
                 },
                 quantity: {
                     type: Number,
@@ -20,9 +21,9 @@ const cartsSchema = new mongoose.Schema({
 
 })
 
-/*cartsSchema.pre('findOne',function(next){
-    this.populate('products')
+cartsSchema.pre('findOne',function(next){
+    this.populate('products._id')
     next()
-})*/
+})
 
 export const cartsModel = mongoose.model('Carts', cartsSchema);
