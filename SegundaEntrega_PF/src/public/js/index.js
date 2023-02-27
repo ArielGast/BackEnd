@@ -103,3 +103,4 @@ socket.on('borrado', (newProducts) => {
     par.innerHTML = "Producto Borrado"
 })
 
+

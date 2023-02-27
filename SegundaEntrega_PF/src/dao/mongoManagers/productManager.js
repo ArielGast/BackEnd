@@ -18,13 +18,14 @@ export  class ProductManager {
     }
 
 
-    async getProductsForHandle(lim) {
+    async getProductsForHandle(lim, pag) {
         try {
-            if (lim == '') {
-                return await productsModel.find().lean();
-            }else {
-                return await productsModel.find().lean().limit(lim);
+            const options = {
+                limit: lim,
+                page: pag 
             }
+            const listado = await productsModel.paginate({},options);
+            return listado
         }catch (error) {
             console.log(error);
         }

@@ -2,11 +2,9 @@ import express from 'express';
 import {__dirname} from "./utils.js";
 import handlebars from 'express-handlebars';
 import {Server} from 'socket.io';
-//import fs from 'fs';
 import viewsRouter from './routes/views.routes.js';
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
-//import { ProductManager } from './dao/fileManagers/productManager.js';
 import { ProductManager } from './dao/mongoManagers/productManager.js';
 import { MessageManager } from './dao/mongoManagers/messageManager.js';
 import './dbconfig.js';
@@ -50,16 +48,6 @@ socketServer.on('connection', (socket) => {
         }
     })
 
-    /* socket.on('render', async () => {
-        let productos = [];
-        if (fs.existsSync(file_products)){
-            const prodJson = await fs.promises.readFile(file_products, 'utf-8')
-            productos = JSON.parse(prodJson)            
-            socketServer.emit('renderizado', productos )
-        } else {
-            socketServer.emit('MsjError', 'Error en la petición')
-        }
-    }) */
 
     socket.on('agregar', async (obj) => {
         await productManager.addProduct(obj)
@@ -69,14 +57,7 @@ socketServer.on('connection', (socket) => {
         }else {
             socketServer.emit('MsjError', 'Request Error')
         }
-        
-        /* if (fs.existsSync(file_products)){
-            const prodJson = await fs.promises.readFile(file_products, 'utf-8')
-            productos = JSON.parse(prodJson)
-            socketServer.emit('Agregado', productos )    
-        }else {
-            socketServer.emit('MsjError', 'Error en la petición')
-        } */
+
     })
 
     socket.on('borrar', async (id) => {
