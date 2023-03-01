@@ -61,7 +61,12 @@ router.post('/login', async(req,res) => {
         for (const key in req.body) {
             req.session[key] = req.body[key]
         }
-        
+        req.session.logged = true;
+        if(email === 'adminCoder@coder.com' && password === 'adminCod3r123'){
+            req.session.isAdmin = true;
+        }else {
+            req.session.isAdmin = false;
+        }
         res.redirect('/views/perfil')
     }else {
         res.redirect('/views/errorLogin')

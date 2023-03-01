@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { ProductManager } from '../dao/mongoManagers/productManager.js';
 import { MessageManager } from '../dao/mongoManagers/messageManager.js';
+import { auth, isLogged, isAdmin } from '../middlewares/auth.middleware.js';
 
 
 const router = Router();
@@ -35,7 +36,7 @@ router.get ('/products', async (req,res) => {
 
 })
 
-router.get('/registro', (req,res) => {
+router.get('/registro', isLogged, (req,res) => {
     res.render('registro')
 })
 
@@ -43,16 +44,15 @@ router.get('/errorRegistro', (req,res) =>{
     res.render('errorRegistro');
 })
 
-router.get('/login', (req,res) =>{
+router.get('/login', isLogged,(req,res) =>{
     res.render('login')
 })
 
-router.get('/perfil', async (req,res) =>{
+router.get('/perfil', auth, isAdmin, async (req,res) =>{
     const {limit = 10, page = 1} = req.query;
     const products= await productManager.getProducts(limit, page);
     const listJson = JSON.parse(JSON.stringify(products.docs));
-    console.log(products);
-    res.render('products', {listJson, products, email:req.session.email})
+    res.render('products', {email: req.session.email, role: req.session.role, listJson, products})
 })
 
 router.get('/errorLogin', (req,res) =>{
