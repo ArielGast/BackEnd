@@ -10,7 +10,7 @@ const messageManager = new MessageManager();
 router.get('/', async (req, res) => {
     const products = await productManager.getProductsForHandle()
     if (products) {
-        res.render('index', {products, email:req.session.email})
+        res.render('index', {products})
         
     }
 });
@@ -26,6 +26,15 @@ router.get ('/chat', async(req,res) => {
     res.render ('chat', newMessage)
 })
 
+router.get ('/products', async (req,res) => {
+    const {limit = 10, page = 1} = req.query;
+    const products= await productManager.getProductsForHandle(limit, page);
+    const listJson = JSON.parse(JSON.stringify(products.docs));
+    console.log(products);
+    res.render('products', {listJson, products})
+
+})
+
 router.get('/registro', (req,res) => {
     res.render('registro')
 })
@@ -38,8 +47,12 @@ router.get('/login', (req,res) =>{
     res.render('login')
 })
 
-router.get('/perfil', (req,res) =>{
-    res.render('perfil', {email:req.session.email})
+router.get('/perfil', async (req,res) =>{
+    const {limit = 10, page = 1} = req.query;
+    const products= await productManager.getProducts(limit, page);
+    const listJson = JSON.parse(JSON.stringify(products.docs));
+    console.log(products);
+    res.render('products', {listJson, products, email:req.session.email})
 })
 
 router.get('/errorLogin', (req,res) =>{

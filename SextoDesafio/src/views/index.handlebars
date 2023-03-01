@@ -1,4 +1,4 @@
-<h1>Bienvenido {{email}}</h1>
+
 <h2>Listado de Productos</h2>
 {{#if products.length}}
     {{#each products}}
@@ -13,7 +13,7 @@
             <p>Categoria: {{category}}</p>
             <img src={{thumbnail}} alt="imagen"></img>
         </div>
-    
+
     {{/each}}
     {{else}}
         <h3>No hay ningún producto</h3>

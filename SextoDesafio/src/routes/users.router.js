@@ -62,7 +62,7 @@ router.post('/login', async(req,res) => {
             req.session[key] = req.body[key]
         }
         
-        res.redirect('/views')
+        res.redirect('/views/perfil')
     }else {
         res.redirect('/views/errorLogin')
     }
