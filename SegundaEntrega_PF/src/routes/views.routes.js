@@ -27,7 +27,7 @@ router.get ('/chat', async(req,res) => {
 
 router.get ('/products', async (req,res) => {
     const {limit = 10, page = 1} = req.query;
-    const products= await productManager.getProductsForHandle(limit, page);
+    const products= await productManager.getProducts(limit, page);
     const listJson = JSON.parse(JSON.stringify(products.docs));
     console.log(products);
     res.render('products', {listJson, products})
