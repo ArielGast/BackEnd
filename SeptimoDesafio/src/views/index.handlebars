@@ -1,0 +1,21 @@
+
+<h2>Listado de Productos</h2>
+{{#if products.length}}
+    {{#each products}}
+        <div>
+            <p>Id: {{_id}}</p>
+            <p>Producto: {{products.title}}</p>
+            <p>Descripción: {{description}}</p>
+            <p>Código: {{code}}</p>
+            <p>Precio: $ {{price}}</p>
+            <p>Estado: {{status}}</p>
+            <p>Stock: {{stock}}</p>
+            <p>Categoria: {{category}}</p>
+            <img src={{thumbnail}} alt="imagen"></img>
+        </div>
+
+    {{/each}}
+    {{else}}
+        <h3>No hay ningún producto</h3>
+{{/if}} 
+
