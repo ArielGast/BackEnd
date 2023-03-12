@@ -29,7 +29,7 @@ router.post(
         passReqToCallback: true,
     }/* , (req,res) => {
         res.redirect('/views/perfil');
-    } */)
+    }  */)
 )
 
 
@@ -65,6 +65,18 @@ router.get('/logout', (req,res) => {
             res.redirect('/views/login')
         }
     })
+})
+
+router.get('/registroGithub',
+    passport.authenticate('githubRegistro', {scope : ['user.email']})
+)
+
+router.get('/github', passport.authenticate('githubRegistro', {failureRedirect: '/views/errorRegistro'}),  (req,res) => {
+    req.session.email = req.user.email;
+    req.session.isAdmin = false;
+    req.session.logged = true;
+    res.redirect('/views/perfil');
+
 })
 
 export default router

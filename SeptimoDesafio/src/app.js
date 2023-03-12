@@ -14,7 +14,7 @@ import { MessageManager } from './dao/mongoManagers/messageManager.js';
 import './dbconfig.js';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
-import './passport/localPassport.js';
+import './passport/passportStrategies.js';
 
 const fileStore = FileStore(session);
 
