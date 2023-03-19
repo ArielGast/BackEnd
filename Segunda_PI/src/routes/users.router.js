@@ -6,20 +6,6 @@ import { hashPassword, comparePasswords } from "../utils.js";
 const router = Router();
 
 
-//Mongo
-
-//registro sin passport
-/* router.post('/registro', async(req,res) => {
-    const {email, password} = req.body;
-    const existeUsuario = await usersModel.find({email, password})
-    if (existeUsuario.length !==0) {
-        res.redirect('/views/errorRegistro')
-    } else {
-        await usersModel.create(req.body)
-        res.redirect('/views/login');
-    }
-}) */
-
 //registro con passport
 router.post(
     '/registro', 
@@ -77,6 +63,16 @@ router.get('/github', passport.authenticate('githubRegistro', {failureRedirect: 
     req.session.logged = true;
     res.redirect('/views/perfil');
 
+})
+
+// Google
+router.get('/registroGoogle', passport.authenticate('google',{scope:['profile', 'email']}));
+
+router.get('/google', passport.authenticate('google', {scope:['email']}), (req,res) => {
+    req.session.email = req.user.email;
+    req.session.isAdmin = false;
+    req.session.logged = true;
+    res.redirect('/views/perfil');
 })
 
 export default router
