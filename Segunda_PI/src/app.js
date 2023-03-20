@@ -15,6 +15,7 @@ import './dbconfig.js';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import './passport/passportStrategies.js';
+import sessionsRouter from './routes/sessions.router.js';
 
 const fileStore = FileStore(session);
 
@@ -53,6 +54,7 @@ app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/views', viewsRouter);
 app.use('/users', usersRouter);
+app.use('/api/sessions', sessionsRouter);
 app.use(cookieParser());
 
 

@@ -61,6 +61,7 @@ router.get('/github', passport.authenticate('githubRegistro', {failureRedirect: 
     req.session.email = req.user.email;
     req.session.isAdmin = false;
     req.session.logged = true;
+    req.session.auth = 'github';
     res.redirect('/views/perfil');
 
 })
@@ -72,6 +73,7 @@ router.get('/google', passport.authenticate('google', {scope:['email']}), (req,r
     req.session.email = req.user.email;
     req.session.isAdmin = false;
     req.session.logged = true;
+    req.session.auth = 'google';
     res.redirect('/views/perfil');
 })
 
